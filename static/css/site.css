@@ -117,6 +117,12 @@ a {
     text-transform: uppercase;
 }
 
+a#catalog {
+    text-decoration: underline;
+    color: blue;
+    text-transform: uppercase;
+}
+
 div.details {
     display: block;
     margin: auto;

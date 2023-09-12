@@ -24,8 +24,16 @@ router.get("/filter", (req, res) => {
       return false;
     });
 
+    if(filtered.length == 0){
+      res.render("noResults",{
+        title : 'No Results'
+      })
+      return;
+    }
 
   }
+
+  console.log(filtered);
 
   res.render("index", {
     title: "Browse",
