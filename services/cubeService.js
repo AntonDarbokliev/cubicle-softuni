@@ -1,46 +1,23 @@
-const fs = require("fs");
-
-const filename = "./models/data.json";
-const data = JSON.parse(fs.readFileSync(filename));
-
-async function persist() {
-  return new Promise((res, rej) => {
-    fs.writeFile(filename, JSON.stringify(data), (err) => {
-      if (err == null) {
-        res();
-      } else {
-        rej(err);
-      }
-    });
-  });
-}
+const Cube = require("../models/Cube.js");
 
 function getAll() {
-  return data;
+  return Cube.find({}).lean();
 }
 
 function getById(id) {
-  return data.find((i) => i.id == id);
+  return Cube.findById(id).lean();
 }
 
 async function create(cubeData){
   const cube = {
-    id : getId(),
     name : cubeData.name,
     description : cubeData.description,
     imageUrl : cubeData.imageUrl,
     difficultyLevel : Number(cubeData.difficultyLevel)
   }
+  const result = await Cube.create(cube)
 
-  console.log(cube);
-  data.push(cube)
-  await persist()
-  
-  return cube
-} 
-
-function getId(){
-  return ('000000' +  (Math.random() * 999999 | 0).toString(16)).slice(-6)
+  return result
 }
 
 module.exports = {

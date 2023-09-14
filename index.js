@@ -1,24 +1,16 @@
 const express = require("express");
-const hbs = require("express-handlebars").create({
-  extname: ".hbs",
-});
+const expressConfig = require("./config/express.js");
+const routeConfig = require("./config/routes.js");
+const databaseConfig = require('./config/database.js')
 
-const indexController = require("./controlllers/indexController.js");
-const createController = require("./controlllers/createController.js");
-const aboutController = require("./controlllers/aboutController.js");
-const NotFoundController = require('./controlllers/404Controller.js')
+async function start() {
+  const app = express();
+  await databaseConfig(app)
+  expressConfig(app);
+  routeConfig(app);
 
-const app = express();
 
-app.engine(".hbs", hbs.engine);
-app.set("view engine", ".hbs");
+  app.listen(3000, () => console.log("Server running on port 3000"));
+}
 
-app.use(express.urlencoded({ extended: true }));
-app.use("/static", express.static("static"));
-
-app.use(indexController);
-app.use("/create", createController);
-app.use("/about", aboutController);
-app.use("*", NotFoundController);
-
-app.listen(3000, () => console.log("Server running on port 3000"));
+start();
