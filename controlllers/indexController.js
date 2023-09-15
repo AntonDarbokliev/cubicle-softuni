@@ -19,11 +19,13 @@ router.get("/filter", async (req, res) => {
   let filtered = [];
   if (searchValue || toValue || fromValue) {
     filtered = cubes.filter((el) => {
-      if (el.name.toLowerCase() === searchValue.toLowerCase()) return true;
+      console.log(el.name);
+      if (el.name.toLowerCase().includes(searchValue.toLowerCase())) return true;
       else if (el.difficultyLevel >= fromValue && el.difficultyLevel <= toValue)
         return true;
       return false;
     });
+
 
     if (filtered.length == 0) {
       res.render("noResults", {
@@ -36,7 +38,7 @@ router.get("/filter", async (req, res) => {
   console.log(filtered);
 
   res.render("index", {
-    title: "Browse",
+    title: 'Browse',
     cubes,
     filtered,
   });
@@ -47,6 +49,7 @@ router.get("/details/:id", async (req, res) => {
   const cube = await getById(id);
   if (cube) {
     res.render("details", {
+      title : "Cube Details",
       cube,
     });
   } else {

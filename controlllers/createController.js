@@ -5,7 +5,9 @@ const router = require('express').Router()
 
 
 router.get('/', (req,res)=>{
-    res.render('create')
+    res.render('create',{
+        title :  'Create a Cube'
+    })
 })
 
 router.post('/', async (req,res)=>{
@@ -16,7 +18,7 @@ try{
     res.render('create',{
         title : 'Request error'
     }); 
-    console.log(err);
+    console.log(err);  
 }
 
 
