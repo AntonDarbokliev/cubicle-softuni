@@ -4,7 +4,6 @@ const router = require("express").Router();
 
 router.get("/", async (req, res) => {
   const cubes = await getAll();
-  console.log(req.query);
   res.render("index", {
     title: "Browse",
     cubes,
@@ -18,11 +17,15 @@ router.get("/filter", async (req, res) => {
   const toValue = req.query.to;
   let filtered = [];
   if (searchValue || toValue || fromValue) {
+    console.log(toValue);
+    console.log(fromValue);
     filtered = cubes.filter((el) => {
-      console.log(el.name);
-      if (el.name.toLowerCase().includes(searchValue.toLowerCase())) return true;
-      else if (el.difficultyLevel >= fromValue && el.difficultyLevel <= toValue)
+      if (el.difficultyLevel >= fromValue && el.difficultyLevel <= toValue){
         return true;
+      }
+      if (el.name.toLowerCase().includes(searchValue.toLowerCase()) && searchValue !== ''){
+        return true;
+      } 
       return false;
     });
 
@@ -34,8 +37,6 @@ router.get("/filter", async (req, res) => {
       return;
     }
   }
-
-  console.log(filtered);
 
   res.render("index", {
     title: 'Browse',
