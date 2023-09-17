@@ -12,13 +12,19 @@
         <h2>Accessories</h2>
             <div class="accessories">
                {{!-- insert accessory cards here --}}
-      {{#if accessories}}
-      {{#each accessories}}
-      {{> accessoryCard}}
-      {{/each}}
-      {{else}}
+     {{#if isEmpty}}
         <h3 class="italic">This cube has no accessories yet...</h3>
-        <a id="attach" href="/attach/accessory/{{cube._id}}">Attach accessories</a>
-      {{/if}}
-          </div>
+        {{else}}
+     {{#each cube.accessories}}
+     {{> accessoryCard}}
+     {{/each}}
+     {{/if}}
+      
+
+      <form action="/attach/accessory/{{cube._id}}">
+    <input type="submit" value="Attach accessories" id="attach" />
+      </form>
+      {{!-- <a id="attach" href="/attach/accessory/{{cube._id}}">Attach accessories</a>
+    <button id="attach"><a href="/attach/accessory/{{cube._id}}"></a>Attach accessories</button> --}}
+      </div>
     </main>

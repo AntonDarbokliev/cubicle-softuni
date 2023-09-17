@@ -251,7 +251,8 @@ footer {
 }
 
 #attach { 
-    color : blue
+    text-transform : none;
+    display : inherit
 }
 
 /*Animations & Transitions

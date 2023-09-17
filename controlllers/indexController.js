@@ -47,11 +47,16 @@ router.get("/filter", async (req, res) => {
 
 router.get("/details/:id", async (req, res) => {
   const id = req.params.id;
-  const cube = await getById(id);
+  const cube = await getById(id).populate('accessories').exec();
+  const isEmpty = cube.accessories.length === 0
+
+  // console.log(cube);
+
   if (cube) {
     res.render("details", {
       title : "Cube Details",
       cube,
+      isEmpty
     });
   } else {
     res.render("404");
