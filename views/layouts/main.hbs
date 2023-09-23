@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{title}}</title>
     <link rel="stylesheet" href="/static/css/site.css" type="text/css" />
-    <link rel="icon" type="image/x-icon" href="/static/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.png" />
   </head>
   <body>
     <div class="container">
@@ -15,11 +15,14 @@
           <li><a href="/create/cube">Add a Cube</a></li>
           <li><a href="/create/accessory">Add Accessory</a></li>
           <li><a href="/about">About</a></li>
+          <li><a href="/auth/logout">Logout</a></li>
+          <li><a href="/auth/login">Login</a></li>
+          <li><a href="/auth/register">Register</a></li>
         </ul>
       </header>
     </div>
     <main>
-    {{{body}}}
+      {{{body}}}
     </main>
     <footer>@Cubicle: Exercise for Express.js and Handlebars</footer>
 

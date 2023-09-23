@@ -1,4 +1,5 @@
-const { login } = require("../services/authService.js");
+const User = require("../models/User.js");
+const { login, register } = require("../services/authService.js");
 
 const router = require("express").Router();
 
@@ -9,10 +10,47 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const result = await login(req.body.username, req.body.password);
-  const token = req.singJwt(result);
-  res.cookie('jwt',token)
-  res.redirect('/')
+    try{
+        const result = await login(req.body.username, req.body.password);
+        attachToken(req, res, result);
+        res.redirect("/");
+    }catch(err){
+        res.render('loginPage',{
+            title : 'Login',
+            // error : err.message.split('\n')
+        })
+    }
 });
+
+router.get("/register", (req, res) => {
+  res.render("registerPage", {
+    title: "Register",
+  });
+});
+
+router.post("/register", async (req, res) => {
+    try{
+        if(req.body.password.trim() === '' || req.body.repeatPassword.trim() === ''){
+            throw new Error('All fields are required!')
+        }
+        if(req.body.password.trim() !== req.body.repeatPassword.trim()){
+            throw new Error('Passwords must match!')
+        }
+        const result = await register(req.body.username, req.body.password);
+        attachToken(req, res, result);
+        res.redirect("/");
+    }catch(err){
+        res.render('registerPage',{
+            title : 'Register',
+            // error : err.message.split('\n')
+        })
+        console.log(err);
+    }
+});
+
+function attachToken(req, res, data) {
+    const token = req.singJwt(data);
+    res.cookie("jwt", token);
+}
 
 module.exports = router;
