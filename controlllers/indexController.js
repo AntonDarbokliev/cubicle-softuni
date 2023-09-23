@@ -3,6 +3,8 @@ const { getAll, getById } = require("../services/cubeService.js");
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
+  const user = req.user
+  console.log(user);
   const cubes = await getAll();
   res.render("index", {
     title: "Browse",

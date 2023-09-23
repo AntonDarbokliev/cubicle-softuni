@@ -4,11 +4,12 @@ const router = require('express').Router()
 
 router.get('/',(req,res)=>{
     const id = req.params.id
-    console.log(req.params);
     const cube = getById(id)
+    const cubeAccessories = getById(id).populate('accessories', ).lean()
     if(cube){
         res.render('details',{
-            cube
+            cube,
+            cubeAccessories
         })
     }else{
         res.render('404')
