@@ -7,6 +7,7 @@ const hbs = require("express-handlebars").create({
 const jwtSecret = "jasdfnoai21smd";
 
 const cookieParser = require("cookie-parser");
+const userNav = require("./middlewares/userNav.js");
 
 module.exports = (app) => {
   app.engine(".hbs", hbs.engine);
@@ -17,4 +18,5 @@ module.exports = (app) => {
   
   app.use(cookieParser());
   app.use(auth(jwtSecret))
+  app.use(userNav)
 };
