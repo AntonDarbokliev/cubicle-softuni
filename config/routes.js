@@ -5,6 +5,7 @@ const NotFoundController = require('../controlllers/404Controller.js');
 const createAccessoryController  = require("../controlllers/createAccessoryController.js");
 const attachAccessoryController = require ('../controlllers/attachAccessoryController.js');
 const authController = require("../controlllers/authController.js");
+const editController = require('../controlllers/editController.js')
 const { hasUser } = require("./middlewares/guard.js");
 
 
@@ -14,6 +15,7 @@ module.exports = (app)=>{
     app.use("/create/accessory",hasUser ,createAccessoryController);
     app.use("/about", aboutController);
     app.use("/attach/accessory",hasUser ,attachAccessoryController);
+    app.use("/edit",hasUser ,editController);
     app.use("/auth", authController);
     app.use("*", NotFoundController);
 

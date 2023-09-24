@@ -52,8 +52,6 @@ router.get("/details/:id", async (req, res) => {
   const cube = await getById(id).populate('accessories').exec();
   const isEmpty = cube.accessories.length === 0
 
-  // console.log(cube);
-
   if (cube) {
     res.render("details", {
       title : "Cube Details",
