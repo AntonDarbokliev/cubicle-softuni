@@ -17,7 +17,7 @@ router.post("/login", async (req, res) => {
   } catch (err) {
     res.render("loginPage", {
       title: "Login",
-      // error : err.message.split('\n')
+      err
     });
   }
 });
