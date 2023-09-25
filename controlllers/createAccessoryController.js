@@ -16,7 +16,7 @@ router.post('/', async (req,res)=>{
         res.render('createAccessory',{
             title : 'Request error'
         }); 
-        console.log(err);  
+
     }
     
     

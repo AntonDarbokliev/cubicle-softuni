@@ -3,8 +3,7 @@ const { getAll, getById } = require("../services/cubeService.js");
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
-  const user = req.user
-  console.log(user);
+  // const user = req.user
   const cubes = await getAll();
   res.render("index", {
     title: "Browse",
@@ -19,8 +18,6 @@ router.get("/filter", async (req, res) => {
   const toValue = req.query.to;
   let filtered = [];
   if (searchValue || toValue || fromValue) {
-    console.log(toValue);
-    console.log(fromValue);
     filtered = cubes.filter((el) => {
       if (el.difficultyLevel >= fromValue && el.difficultyLevel <= toValue){
         return true;

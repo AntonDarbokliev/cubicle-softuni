@@ -18,7 +18,6 @@ try{
     res.render('create',{
         title : 'Request error'
     }); 
-    console.log(err);  
 }
 
 

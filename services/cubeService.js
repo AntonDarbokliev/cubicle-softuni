@@ -22,21 +22,25 @@ async function create(cubeData) {
 
 async function update(cubeId, cubeData) {
   const cube = await Cube.findById(cubeId);
-  console.log(cube);
 
   cube.name = cubeData.name;
   cube.description = cubeData.description;
   cube.imageUrl = cubeData.imageUrl;
   cube.difficultyLevel = Number(cubeData.difficultyLevel);
 
-  await cube.save()
+  await cube.save();
 
-  return cube 
+  return cube;
+}
+
+async function delCube(cubeId) {
+  return Cube.findByIdAndRemove(cubeId);
 }
 
 module.exports = {
-  getAll, 
+  getAll,
   getById,
   create,
-  update
+  update,
+  delCube
 };

@@ -33,8 +33,6 @@ async function register(username, password) {
     hashedPassword
   })
 
-//   console.log(user);
-
   return {
     username : user.username
 }
