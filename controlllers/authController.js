@@ -1,5 +1,6 @@
 const { login, register } = require("../services/authService.js");
-const {body, validationResult } = require('express-validator')
+const {body, validationResult } = require('express-validator');
+const createErrorObject = require("../utils/createErrorObject.js");
 
 const router = require("express").Router();
 
@@ -50,12 +51,7 @@ router.post("/register",
     const {errors} = validationResult(req)
 
     if(errors.length > 0) {
-      const errorMessages = []
-      errors.forEach(error => {  
-        errorMessages.push([error.path,error.msg])
-      });
-      console.log(errorMessages);
-      throw Object.fromEntries(errorMessages)
+      createErrorObject(errors)
     }       
 
     const result = await register(req.body.username, req.body.password);
