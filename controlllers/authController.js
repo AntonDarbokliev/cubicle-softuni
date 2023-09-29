@@ -1,6 +1,7 @@
-const { login, register } = require("../services/authService.js");
+const { login, register, doesExist } = require("../services/authService.js");
 const {body, validationResult } = require('express-validator');
 const createErrorObject = require("../utils/createErrorObject.js");
+const { deattachToken, attachToken } = require("../utils/attachDeattachToken.js");
 
 const router = require("express").Router();
 
@@ -10,8 +11,24 @@ router.get("/login", (req, res) => {
   });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login",
+body('username')
+.custom(async (value) => {
+ const exists = await doesExist(value)
+ if(!exists){
+  throw new Error ('No such user exists')
+ }
+})
+,
+async (req, res) => {
   try {
+
+    const {errors} = validationResult(req)
+
+    if(errors.length > 0) {
+      createErrorObject(errors)
+    } 
+
     const result = await login(req.body.username, req.body.password);
     attachToken(req, res, result);
     res.redirect("/");
@@ -19,6 +36,9 @@ router.post("/login", async (req, res) => {
     res.render("loginPage", {
       title: "Login",
       err,
+      body : {
+        username : req.body.username
+      }
     });
   }
 });
@@ -72,14 +92,5 @@ router.get("/logout", (req, res) => {
   deattachToken(res);
   res.redirect("/");
 });
-
-function attachToken(req, res, data) {
-  const token = req.singJwt(data);
-  res.cookie("jwt", token);
-}
-
-function deattachToken(res) {
-  res.clearCookie("jwt");
-}
 
 module.exports = router;

@@ -1,13 +1,14 @@
         <main>
             <h1>Login Form</h1>
+                    {{#if err}}
+                    {{#each err}}
+                    <p id="error"><span class="error">{{this}}</span></p>
+                    {{/each}}
+                    {{/if}}
             <div class="form">
                 <form action="" method="POST">
-                    {{#if err}}
-                    <p id="error"><span class="error">{{err}}</span></p>
-                    {{/if}}
-
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username">
+                    <input type="text" id="username" name="username" value="{{body.username}}">
 
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password">

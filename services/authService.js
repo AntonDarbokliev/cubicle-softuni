@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User.js");
 
 async function login(username, password) {
-    const existing = await User.findOne({username: {$regex : new RegExp(username),$options: "i"}});
+    const existing = await doesExist(username);
     if(!existing){
         throw new Error('No such user exists!')
     }
@@ -20,7 +20,7 @@ async function login(username, password) {
 }
 
 async function register(username, password) {
-  const existing = await User.findOne({username: {$regex : new RegExp(username),$options: "i"}});
+  const existing = await doesExist(username);
   if (existing) {
     throw new Error("Username is taken!");
   }
@@ -39,7 +39,13 @@ async function register(username, password) {
 
 }
 
+async function doesExist(username) {
+  const existing = await User.findOne({username: {$regex : new RegExp(username),$options: "i"}});
+  return existing
+}
+
 module.exports = {
   login,
-  register
+  register,
+  doesExist
 };
